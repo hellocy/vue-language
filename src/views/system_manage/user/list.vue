@@ -3,50 +3,55 @@
         <div :class="[prfClass + '-wrap']">
             <breadcrumb :breadcrumb_list="breadcrumbList"></breadcrumb>
             <div class="main-content-box">
-                <section class="table-top-box">
-                    <div class="search-wrap">
-                        <el-form :inline="true" class="demo-form-inline">
-                            <el-form-item :label="$t('localization.loginName')">
-                                <el-input
-                                    v-model.trim="searchForm.logisticsNum"
-                                    :placeholder="$t('localization.loginName')"
-                                    size="small"
-                                    style="width: 130px;"
-                                ></el-input>
-                            </el-form-item>
-                            <el-form-item :label="$t('localization.name')">
-                                <el-input
-                                    v-model.trim="searchForm.rmaSn"
-                                    :placeholder="$t('localization.name')"
-                                    size="small"
-                                    style="width: 130px;"
-                                ></el-input>
-                            </el-form-item>
-                            <el-form-item :label="$t('localization.tel')">
-                                <el-input
-                                    v-model.trim="searchForm.orderSn"
-                                    :placeholder="$t('localization.tel')"
-                                    size="small"
-                                    style="width: 130px;"
-                                ></el-input>
-                            </el-form-item>
-                            <el-form-item style="margin-left: 20px;">
-                                <el-button
-                                    type="primary"
-                                    size="mini"
-                                    icon="el-icon-search"
-                                    @click="onSearch"
-                                >{{$t('localization.search')}}</el-button>
-                                <el-button
-                                    type="primary"
-                                    size="mini"
-                                    icon="el-icon-delete"
-                                    @click="onClear"
-                                >{{$t('localization.reset')}}</el-button>
-                            </el-form-item>
-                        </el-form>
-                    </div>
-                </section>
+                <div class="search-wrap">
+                    <el-form :inline="true" class="demo-form-inline">
+                        <el-form-item :label="$t('localization.loginName')">
+                            <el-input
+                                v-model.trim="searchForm.logisticsNum"
+                                :placeholder="$t('localization.loginName')"
+                                size="small"
+                                style="width: 130px;"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('localization.name')">
+                            <el-input
+                                v-model.trim="searchForm.rmaSn"
+                                :placeholder="$t('localization.name')"
+                                size="small"
+                                style="width: 130px;"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('localization.tel')">
+                            <el-input
+                                v-model.trim="searchForm.orderSn"
+                                :placeholder="$t('localization.tel')"
+                                size="small"
+                                style="width: 130px;"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item style="margin-left: 20px;">
+                            <el-button
+                                type="primary"
+                                size="mini"
+                                icon="el-icon-search"
+                                @click="onSearch"
+                            >{{$t('localization.search')}}</el-button>
+                            <el-button
+                                type="primary"
+                                size="mini"
+                                icon="el-icon-delete"
+                                @click="onClear"
+                            >{{$t('localization.reset')}}</el-button>
+                            <el-button
+                                style="margin-left: 20px;"
+                                type="primary"
+                                size="mini"
+                                icon="el-icon-plus"
+                                @click="newUser"
+                            >创建新用户</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
                 <el-table
                     :data="tableData"
                     :height="tableHeight"
@@ -179,62 +184,46 @@
 
         <!-- 查看物流轨迹的弹窗内容 -->
         <el-dialog
-            title="物流轨迹"
-            :visible.sync="isTraceVisible"
-            width="62%"
+            title="创建新用户"
+            :visible.sync="isNewUserVisible"
+            width="500px"
             :close-on-click-moda="false"
-            @close="onTraceWinClose"
+            @close="onNewUserWinClose"
         >
-            <el-tabs v-model="traceData.traceTabActiveName" @tab-click="traceTabChanged">
-                <el-tab-pane name="all">
-                    <span slot="label">
-                        <i class="iconfont icon-all"></i>
-                        全部（{{traceData.all}}）
-                    </span>
-                </el-tab-pane>
-                <el-tab-pane name="lost">
-                    <span slot="label">
-                        <i class="iconfont icon-empty-"></i>
-                        查询不到（{{traceData.lost}}）
-                    </span>
-                </el-tab-pane>
-                <el-tab-pane name="carrying">
-                    <span slot="label">
-                        <i class="iconfont icon-logistics"></i>
-                        运输途中（{{traceData.carrying}}）
-                    </span>
-                </el-tab-pane>
-                <el-tab-pane name="arrived">
-                    <span slot="label">
-                        <i class="iconfont icon-arrive"></i>
-                        到达待取（{{traceData.arrived}}）
-                    </span>
-                </el-tab-pane>
-                <el-tab-pane name="fail">
-                    <span slot="label">
-                        <i class="iconfont icon-products_fill"></i>
-                        投递失败（{{traceData.fail}}）
-                    </span>
-                </el-tab-pane>
-                <el-tab-pane name="exception">
-                    <span slot="label">
-                        <i class="iconfont icon-exception"></i>
-                        可能异常（{{traceData.exception}}）
-                    </span>
-                </el-tab-pane>
-                <el-tab-pane name="success">
-                    <span slot="label">
-                        <i class="iconfont icon-qianshoushenpitongguo"></i>
-                        签收成功（{{traceData.success}}）
-                    </span>
-                </el-tab-pane>
-                <el-tab-pane name="back">
-                    <span slot="label">
-                        <i class="iconfont icon-tuihui"></i>
-                        包裹退回（{{traceData.back}}）
-                    </span>
-                </el-tab-pane>
-            </el-tabs>
+            <el-form ref="newUserForm" :model="newUserForm" label-width="80px">
+                <el-form-item label="角色组">
+                    <el-select
+                        class="new-user-form-item"
+                        v-model="newUserForm.region"
+                        placeholder="请选择角色组"
+                    >
+                        <el-option label="管理员" value="1"></el-option>
+                        <el-option label="店小二" value="2"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="用户名">
+                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="密码">
+                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="重复密码">
+                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="登录名">
+                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="电话">
+                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱">
+                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button size="mini" @click="isNewUserVisible = false">取 消</el-button>
+                <el-button size="mini" type="primary" @click="newUserConfirm">确 定</el-button>
+            </span>
         </el-dialog>
 
         <!-- 图片浏览组件 -->
@@ -276,7 +265,7 @@ export default {
         return {
             prfClass: 'rp-forecast-customer',
             isDetailVisible: false,
-            isTraceVisible: false,
+            isNewUserVisible: false,
             pickerOptions: {
                 disabledDate(time) {
                     // return time.getTime() > Date.now()
@@ -306,6 +295,7 @@ export default {
                     }
                 ]
             },
+            newUserForm: {},
             searchForm: {
                 startTime: '',
                 endTime: '',
@@ -434,7 +424,6 @@ export default {
             // currentPage 改变时会触发
             this.initDetailTable()
         },
-        traceTabChanged(val) {}, // 跟踪轨迹弹窗中的tab改变时会触发
         onDateChanged(timeFlag) {
             if (
                 this.searchForm.startTime &&
@@ -459,26 +448,18 @@ export default {
                 this.searchForm[i] = ''
             }
         },
+        newUser() {
+            this.isNewUserVisible = true
+        },
+        newUserConfirm() {
+            this.isNewUserVisible = false
+        },
+        onNewUserWinClose() {},
         formatStatus(row, column) {
             let status = row.status
             // alert(status)
             let _arr = ['待退件', '退件中', '异常完成', '已完成', '关闭']
             return _arr[Number(status) - 1]
-        },
-        formatForecastFlag(row, column) {
-            let forecastFlag = row.forecastFlag
-            let _arr = ['未预报', '已预报']
-            return _arr[Number(forecastFlag)]
-        },
-        formatsyncOmsFlag(row, column) {
-            let syncOmsFlag = row.syncOmsFlag
-            let _arr = ['不同步', '同步']
-            return _arr[Number(syncOmsFlag)]
-        },
-        formatmatchFlag(row, column) {
-            let matchFlag = row.matchFlag
-            let _arr = ['未匹配', '匹配']
-            return _arr[Number(matchFlag)]
         },
         viewDetail(index, row) {
             this.loading = true
@@ -491,83 +472,6 @@ export default {
                     this.isDetailVisible = true
                 }
             })
-        },
-        viewTrack(index, row) {
-            this.isTraceVisible = true
-            RP_INTERFACE.rpForecast
-                .getTrackInfo({
-                    logisticsNum: row.logisticsNum,
-                    logisticsUrl: row.logisticsUrl,
-                    expressCode: row.expressCode
-                })
-                .then(res => {
-                    const data = res.data
-                    if (data.code === 0) {
-                        let trajectory = data.data.trajectory.trajectory
-                        if (!trajectory) {
-                            this.traceData.all = 0
-                            return
-                        }
-                        this.traceData.all = 1
-                        let trajectoryFromItems =
-                            data.data.trajectory.trajectoryFromItems
-                        let trajectoryToItems =
-                            data.data.trajectory.trajectoryToItems
-                        let status = trajectory.result
-                        this.traceData.status = status
-                        this.traceData.lost = status === 65 ? 1 : 0
-                        this.traceData.carrying = status === 8 ? 1 : 0
-                        this.traceData.arrived = status === 30 ? 1 : 0
-                        this.traceData.fail = status === 20 ? 1 : 0
-                        this.traceData.exception = status === 50 ? 1 : 0
-                        this.traceData.success = status === 40 ? 1 : 0
-                        this.traceData.back = status === 65 ? 1 : 0
-
-                        this.traceData.latest.id = trajectory.id
-                        this.traceData.latest.statusText =
-                            trajectory.signTrayStatus
-                        this.traceData.latest.datetime = trajectory.signTrayDate
-                        this.traceData.latest.trayStatus =
-                            trajectory.onlineTrayStatus
-
-                        this.traceData.from = trajectoryFromItems.map(item => {
-                            return {
-                                date: item.date,
-                                status: item.status
-                            }
-                        })
-                        this.traceData.to = trajectoryToItems.map(item => {
-                            return {
-                                date: item.date,
-                                status: item.status
-                            }
-                        })
-                    }
-                })
-        },
-        onTraceWinClose() {
-            this.traceData = {
-                traceTabActiveName: 'all',
-                status: '',
-                latest: {
-                    id: '',
-                    statusText: '',
-                    from: '',
-                    to: '',
-                    datetime: '',
-                    trayStatus: ''
-                },
-                from: [],
-                to: [],
-                all: 1,
-                lost: 0,
-                carrying: 0,
-                arrived: 0,
-                fail: 0,
-                exception: 0,
-                success: 0,
-                back: 0
-            }
         },
         initImageViewer(viewer) {
             this.$viewer = viewer
@@ -594,4 +498,10 @@ export default {
 </script>
 
 <style lang="scss">
+.table-top-box {
+    margin: 5px 0;
+}
+.new-user-form-item {
+    width: 350px;
+}
 </style>
