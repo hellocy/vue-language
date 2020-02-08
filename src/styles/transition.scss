@@ -1,0 +1,49 @@
+//globl transition css
+
+/*fade*/
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.28s;
+}
+.fade-enter, .fade-leave-active {
+    opacity: 0;
+}
+
+/* 面包屑的动画 */
+.breadcrumb-enter-active, .breadcrumb-leave-active {
+    transition: all .5s;
+}
+.breadcrumb-enter, .breadcrumb-leave-active {
+    opacity: 0;
+    transform: translateX(20px);
+}
+.breadcrumb-move {
+    transition: all .5s;
+}
+.breadcrumb-leave-active {
+    position: absolute;
+}
+
+
+
+// sidebar transition 侧边栏的动画效果
+.slideleft-enter-active, .slideleft-leave-active {
+    transition: all .4s ease-out;
+}
+.slideleft-enter-to, .slideleft-leave {
+    transform: translateX(0px);
+    opacity: 1;
+}
+.slideleft-enter, .slideleft-leave-to {
+    transform: translateX(-360px);
+    opacity: 0;
+}
+
+
+// submenu transition
+.submenu-enter-active, .submenu-leave-active {
+    transition: all .2s;
+}
+.submenu-enter, .submenu-leave-active {
+    opacity: 0;
+    transform: translateY(20px);
+}

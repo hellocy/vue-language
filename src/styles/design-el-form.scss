@@ -1,0 +1,41 @@
+.design-form-custom {
+    .el-form.el-form--label-top {
+        label.el-form-item__label {
+            margin-bottom: 10px;
+            padding: 0px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+        }
+        .el-form-item-desc {
+            margin-top: 5px;
+            line-height: 1.4em;
+            color: #999;
+        }
+    }
+}
+
+.design-component-text {
+    line-height: 1.4em;
+    font-size: 16px;
+    color: #666;
+}
+
+.design-component-colorpicker {
+    position: relative;
+    .el-color-picker {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 2;
+        .el-color-picker__trigger {
+            border-color: transparent;
+            border-right-color: #DDDDDD;
+        }
+    }
+    input {
+        padding-left: 50px;
+    }
+}

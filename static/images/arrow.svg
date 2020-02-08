@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="101px" height="33px" viewBox="0 0 101 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>形状结合备份 5@2x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="-1.11022302e-14%" y1="50%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="PLM-首页规划管理-下拉" transform="translate(-1258.000000, -244.000000)" fill="url(#linearGradient-1)">
+            <g id="编组-5">
+                <path d="M1274.59406,253.466643 L1358,261.149881 L1358,261.532639 L1274.59406,267.383581 L1274.59406,275.065821 C1274.59406,275.618106 1274.14635,276.065821 1273.59406,276.065821 C1273.32884,276.065821 1273.07449,275.960464 1272.88695,275.772928 L1258.20641,261.092386 C1257.81589,260.701862 1257.81589,260.068697 1258.20641,259.678173 L1272.88695,244.997631 C1273.27748,244.607107 1273.91064,244.607107 1274.30117,244.997631 C1274.4887,245.185168 1274.59406,245.439522 1274.59406,245.704738 L1274.59406,253.466643 Z" id="形状结合备份-5" transform="translate(1308.000000, 260.385280) scale(-1, -1) rotate(-360.000000) translate(-1308.000000, -260.385280) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
