@@ -1,14 +1,14 @@
 module.exports = {
     localization: {
-        sysTitle: "XXX管理后台",
+        sysTitle: 'XXX管理后台',
         wkly: '保加利亚',
         pleaseChoose: '请选择',
         sysMge: '系统管理',
         sysUserMge: '系统用户管理',
         supplierManager: '超级管理员',
         countryArea: '国家和地区',
-        selectlanguage: "选择语言",
-        language: "语言",
+        selectlanguage: '选择语言',
+        language: '语言',
         loginName: '登录名',
         simpleZh: '简体中文',
         fantiZh: '繁体中文',
@@ -28,6 +28,15 @@ module.exports = {
         search: '查询',
         reset: '重置',
         index: '序号',
-        welcome: "欢迎进入"
+        welcome: '欢迎进入',
+
+        orderNo: '单号',
+        title: '标题',
+        submitTime: '提交时间',
+        submitUser: '提交人',
+        status: '状态',
+        statusDesc: '状态描述',
+        dealUser: '处理人',
+        dealTime: '处理时间'
     }
 }

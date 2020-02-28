@@ -1,14 +1,14 @@
 module.exports = {
     localization: {
-        sysTitle: "XXX Manage System",
+        sysTitle: 'XXX Manage System',
         wkly: 'Bulgaria',
         pleaseChoose: 'Please choose',
         sysMge: 'System manage',
         sysUserMge: 'System user manage',
         supplierManager: 'Super administrator',
         countryArea: 'country(Area)',
-        selectlanguage: "Language",
-        language: "language",
+        selectlanguage: 'Language',
+        language: 'language',
         loginName: 'Login Name',
         simpleZh: 'Simplified Chinese',
         fantiZh: 'Traditional Chinese',
@@ -30,6 +30,15 @@ module.exports = {
         index: 'index',
         hello: 'Hello',
         login: 'Login',
-        welcome: "Welcome to "
+        welcome: 'Welcome to ',
+
+        orderNo: 'orderNo',
+        title: 'title',
+        submitTime: 'submitTime',
+        submitUser: 'submitUser',
+        status: 'status',
+        statusDesc: 'statusDesc',
+        dealUser: 'dealUser',
+        dealTime: 'dealTime'
     }
 }
