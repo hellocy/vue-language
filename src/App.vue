@@ -112,16 +112,36 @@
 
 <template>
     <div>
-        <transition name="fade" mode="out-in">
-            <router-view></router-view>
-        </transition>
+        <common-header ref="commonHeader"></common-header>
+        <left-menu ref="leftMenu"></left-menu>
+        <div
+            class="page-content-wraper"
+            v-bind:style="{width: pageContengSize.w + 'px', height: pageContengSize.h + 'px'}"
+        >
+            <transition name="fade" mode="out-in">
+                <router-view></router-view>
+            </transition>
+        </div>
     </div>
 </template>
 
 <script>
+import commonHeader from '@/components/commonHeader'
+import leftMenu from '@/components/leftMenu'
 export default {
+    components: {
+        commonHeader,
+        leftMenu
+    },
     data() {
-        return {
+        return {}
+    },
+    computed: {
+        pageContengSize() {
+            return {
+                w: window.innerWidth - 200,
+                h: window.innerHeight - 60
+            }
         }
     },
     mounted: function() {

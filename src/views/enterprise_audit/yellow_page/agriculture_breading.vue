@@ -1,8 +1,5 @@
 <template>
     <div>
-    <common-header ref="commonHeader"></common-header>
-    <left-menu ref="leftMenu"></left-menu>
-    <div class="page-content-wraper" v-bind:style="{width: pageContengSize.w + 'px', height: pageContengSize.h + 'px'}">
         <breadcrumb :breadcrumb_list="breadcrumbList"></breadcrumb>
         <div class="main-content-box">
             <div class="search-wrap">
@@ -80,11 +77,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="orderSn" :label="$t('localization.name')" width="180"></el-table-column>
-                <el-table-column
-                    prop="logisticsNum"
-                    :label="$t('localization.tel')"
-                    width="180"
-                >
+                <el-table-column prop="logisticsNum" :label="$t('localization.tel')" width="180">
                     <template slot-scope="scope">
                         <el-link
                             type="primary"
@@ -100,11 +93,7 @@
                     :label="$t('localization.loginCount')"
                     width="180"
                 ></el-table-column>
-                <el-table-column
-                    prop="inStockCode"
-                    :label="$t('localization.loginIp')"
-                    width="180"
-                ></el-table-column>
+                <el-table-column prop="inStockCode" :label="$t('localization.loginIp')" width="180"></el-table-column>
                 <el-table-column
                     prop="createUser"
                     :label="$t('localization.loginTime')"
@@ -115,11 +104,7 @@
                     :label="$t('localization.releGroup')"
                     width="150"
                 ></el-table-column>
-                <el-table-column
-                    fixed="right"
-                    :label="$t('localization.operation')"
-                    width="160"
-                >
+                <el-table-column fixed="right" :label="$t('localization.operation')" width="160">
                     <template slot-scope="scope">
                         <el-button
                             class="btn-opt"
@@ -147,7 +132,6 @@
                 ></el-pagination>
             </div>
         </div>
-    </div>
 
         <!-- 创建新用户 -->
         <el-dialog
@@ -213,13 +197,9 @@
 import breadcrumb from '../../../components/breadcrumb'
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer/src/component.vue'
-import commonHeader from '@/components/commonHeader'
-import leftMenu from '@/components/leftMenu'
 export default {
     components: {
         breadcrumb,
-        commonHeader,
-        leftMenu,
         Viewer
     },
     props: {
@@ -306,7 +286,7 @@ export default {
                 }
             ]
         },
-        pageContengSize () {
+        pageContengSize() {
             return {
                 w: window.innerWidth - 200,
                 h: window.innerHeight - 60
@@ -336,14 +316,16 @@ export default {
             let condStr = JSON.stringify(this.searchForm)
             let param = `st=5&biz_content={"start":1, "limit":20,"condi":${condStr}}`
             console.log(param, 88888)
-            PLM_INTERFACE.systemManage.systemUser.api(`st=1&biz_content=${param}`).then(res => {
-                const data = res.data
-                this.loading = false
-                if (data.code === 0) {
-                    this.tableData = data.data.list
-                    this.tablePage.total = Number(data.data.total)
-                }
-            })
+            PLM_INTERFACE.systemManage.systemUser
+                .api(`st=1&biz_content=${param}`)
+                .then(res => {
+                    const data = res.data
+                    this.loading = false
+                    if (data.code === 0) {
+                        this.tableData = data.data.list
+                        this.tablePage.total = Number(data.data.total)
+                    }
+                })
         },
         handleSizeChange(val) {
             // pageSize 改变时会触发
@@ -387,15 +369,16 @@ export default {
         },
         newUser() {
             let newUserInfoStr = JSON.stringify(this.newUserForm)
-            PLM_INTERFACE.systemManage.systemUser.api(`st=1&biz_content=${newUserInfoStr}`).then(res => {
-                const data = res.data
-                this.loading = false
-                if (data.code === 0) {
-                    this.isNewUserVisible = true
-                } else {
-
-                }
-            })
+            PLM_INTERFACE.systemManage.systemUser
+                .api(`st=1&biz_content=${newUserInfoStr}`)
+                .then(res => {
+                    const data = res.data
+                    this.loading = false
+                    if (data.code === 0) {
+                        this.isNewUserVisible = true
+                    } else {
+                    }
+                })
         },
         newUserConfirm() {
             this.isNewUserVisible = false
