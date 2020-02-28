@@ -1,9 +1,28 @@
 import request from '@/utils/Request'
 
-const getToken = data => {
+const getVcode = data => {
     // 登陆
     return request({
-        url: '/ssologin',
+        url: '/captcha',
+        method: 'get',
+        data
+    })
+}
+
+const refreshVcode = data => {
+    // 登陆
+    return request({
+        url: `/captcha/flush?id=${data.id}'`,
+        method: 'get',
+        data
+    })
+}
+
+const login = data => {
+    console.log(data, 8888)
+    // 登陆
+    return request({
+        url: `/login?id=${data.id}&digits=${data.digits}`,
         method: 'post',
         data
     })
@@ -28,7 +47,9 @@ const tokenRefresh = data => {
 }
 
 export default {
-    getToken,
+    getVcode,
+    login,
+    refreshVcode,
     logout,
     tokenRefresh
 }

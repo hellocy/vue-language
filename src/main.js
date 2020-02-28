@@ -82,8 +82,8 @@ const i18n = new VueI18n({
     messages: {
         'en-US': Object.assign(require('./language/en'), enLocale),
         'zh-CN': Object.assign(require('./language/zh'), zhLocale),
-        'Bul': Object.assign(require('./language/bul')),
-    },
+        'Bul': Object.assign(require('./language/bul'))
+    }
     // silentTranslationWarn: true
 })
 // locale.i18n((key, value) => i18n.t(key, value)) // 为了之后将element-ui组件本地化

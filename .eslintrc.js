@@ -17,7 +17,7 @@ module.exports = {
         'vue'
     ],
     globals: {
-        PLM_INTERFACE: true,
+        ZT_INTERFACE: true,
         VUE: true
     },
     // add your custom rules here

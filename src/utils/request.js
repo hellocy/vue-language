@@ -17,7 +17,7 @@ service.interceptors.request.use(
     config => {
         // 让每个请求携带自定义token 请根据实际情况自行修改
         if (sessionStorage.getItem('accessToken')) {
-            config.headers['PLM-TOKEN'] = sessionStorage.getItem('accessToken')
+            config.headers['token'] = sessionStorage.getItem('accessToken')
         }
         config.headers['Content-Type'] = 'application/json'
         config.data = JSON.stringify(config.data)
@@ -31,26 +31,13 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response => {
         let data = response.data
-        if (data.code === 0) {
+        if (data.status === 0) {
             return response
-        } else if (data.code === 900000001 || data.code === 900000005 || data.code === 900000006 || data.code === 900000401) {
+        } else {
             VUE.$message.error({
                 showClose: true,
                 message: data.message
             })
-            setTimeout(() => {
-                sessionStorage.removeItem('accessToken')
-                sessionStorage.removeItem('sid')
-                // location.href = handleRedirectUrl('logout')
-            }, 1000)
-            return response
-        } else if (data.code === 900000007) {
-            VUE.$message.error(`服务器错误：${data.message}`)
-            return response
-        } else if (data.code === 900000012) {
-            VUE.$message.error('触发流量限制')
-        } else if (data.code === 900000403) {
-            VUE.$message.error('权限不足')
             return response
         }
     },
@@ -66,9 +53,9 @@ service.interceptors.response.use(
                 message = '服务器错误'
             } else if (code === 400) {
                 if (
-                    data.code === 900000001 ||
-                    data.code === 900000005 ||
-                    data.code === 900000006
+                    data.status === 900000001 ||
+                    data.status === 900000005 ||
+                    data.status === 900000006
                 ) {
                     message = data.message
                 }

@@ -154,7 +154,7 @@
       $changeLlink.onclick = function (e) {
         ajax({
           type: "post",
-          url: "/user/getvcode",
+          url: "http://129.211.181.211/bg/admin/api/captcha",
           data: {},
           success: function (data) {
             console.log(data)
@@ -193,8 +193,8 @@
           }
         })
         setTimeout(function () {
-          location.href = './'
-        }, 2000)
+          location.href = './index.html'
+        }, 1000)
       }
     }
 

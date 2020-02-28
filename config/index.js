@@ -8,13 +8,7 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/proxy': {
-                target: 'http://10.29.6.96:8088/', //宾灯服务器接口地址
-                // target: 'http://10.35.4.114:8088/', //徐旭彬服务器接口地址
-                // target: 'http://10.29.6.68:8088/', //王标服务器接口地址
-                // target: 'http://10.35.4.148:8899/', //陈毅服务器接口地址
-                // target: 'http://plm.hqygou.com:8088', //测试机服务器接口地址-1
-                // target: 'http://plm.hqygou.com:8188', //测试机服务器接口地址-2
-                // target: 'http://api-plm.gw-ec.com/', //正式服务器接口地址
+                target: 'http://129.211.181.211/bg/admin/api/', //测试服务器接口地址
                 changeOrigin: true,
                 pathRewrite: {
                     '^/proxy': ''
@@ -24,7 +18,7 @@ module.exports = {
 
         // Various Dev Server settings
         host: ip.address(), // can be overwritten by process.env.HOST
-        port: 9528, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+        port: 9529, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
         autoOpenBrowser: true,
         errorOverlay: true,
         notifyOnErrors: false,

@@ -1,151 +1,153 @@
 <template>
-    <div :class="prfClass">
-        <div :class="[prfClass + '-wrap']">
-            <breadcrumb :breadcrumb_list="breadcrumbList"></breadcrumb>
-            <div class="main-content-box">
-                <div class="search-wrap">
-                    <el-form :inline="true" class="demo-form-inline">
-                        <el-form-item :label="$t('localization.loginName')">
-                            <el-input
-                                v-model.trim="searchForm.username"
-                                :placeholder="$t('localization.loginName')"
-                                size="small"
-                                style="width: 130px;"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('localization.name')">
-                            <el-input
-                                v-model.trim="searchForm.displayname"
-                                :placeholder="$t('localization.name')"
-                                size="small"
-                                style="width: 130px;"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('localization.tel')">
-                            <el-input
-                                v-model.trim="searchForm.mobile"
-                                :placeholder="$t('localization.tel')"
-                                size="small"
-                                style="width: 130px;"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item style="margin-left: 20px;">
-                            <el-button
-                                type="primary"
-                                size="mini"
-                                icon="el-icon-search"
-                                @click="onSearch"
-                            >{{$t('localization.search')}}</el-button>
-                            <el-button
-                                type="primary"
-                                size="mini"
-                                icon="el-icon-delete"
-                                @click="onClear"
-                            >{{$t('localization.reset')}}</el-button>
-                            <el-button
-                                style="margin-left: 20px;"
-                                type="primary"
-                                size="mini"
-                                icon="el-icon-plus"
-                                @click="newUser"
-                            >创建新用户</el-button>
-                        </el-form-item>
-                    </el-form>
-                </div>
-                <el-table
-                    :data="tableData"
-                    :height="tableHeight"
-                    border
-                    stripe
-                    :empty-text="$t('localization.noData')"
-                    :class="prfClass"
-                    style="width: 100%;"
+    <div>
+    <common-header ref="commonHeader"></common-header>
+    <left-menu ref="leftMenu"></left-menu>
+    <div class="page-content-wraper" v-bind:style="{width: pageContengSize.w + 'px', height: pageContengSize.h + 'px'}">
+        <breadcrumb :breadcrumb_list="breadcrumbList"></breadcrumb>
+        <div class="main-content-box">
+            <div class="search-wrap">
+                <el-form :inline="true" class="demo-form-inline">
+                    <el-form-item :label="$t('localization.loginName')">
+                        <el-input
+                            v-model.trim="searchForm.username"
+                            :placeholder="$t('localization.loginName')"
+                            size="small"
+                            style="width: 130px;"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('localization.name')">
+                        <el-input
+                            v-model.trim="searchForm.displayname"
+                            :placeholder="$t('localization.name')"
+                            size="small"
+                            style="width: 130px;"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('localization.tel')">
+                        <el-input
+                            v-model.trim="searchForm.mobile"
+                            :placeholder="$t('localization.tel')"
+                            size="small"
+                            style="width: 130px;"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item style="margin-left: 20px;">
+                        <el-button
+                            type="primary"
+                            size="mini"
+                            icon="el-icon-search"
+                            @click="onSearch"
+                        >{{$t('localization.search')}}</el-button>
+                        <el-button
+                            type="primary"
+                            size="mini"
+                            icon="el-icon-delete"
+                            @click="onClear"
+                        >{{$t('localization.reset')}}</el-button>
+                        <el-button
+                            style="margin-left: 20px;"
+                            type="primary"
+                            size="mini"
+                            icon="el-icon-plus"
+                            @click="newUser"
+                        >创建新用户</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <el-table
+                :data="tableData"
+                :height="tableHeight"
+                border
+                stripe
+                :empty-text="$t('localization.noData')"
+                :class="prfClass"
+                style="width: 100%;"
+            >
+                <el-table-column
+                    type="index"
+                    :label="$t('localization.index')"
+                    align="center"
+                    width="80"
+                ></el-table-column>
+                <el-table-column prop="rmaSn" :label="$t('localization.search')" width="180">
+                    <template slot-scope="scope">
+                        <el-link
+                            type="primary"
+                            class="btn-opt"
+                            @click="viewDetail(scope.$index, scope.row)"
+                            size="small"
+                        >{{scope.row.rmaSn}}</el-link>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="orderSn" :label="$t('localization.name')" width="180"></el-table-column>
+                <el-table-column
+                    prop="logisticsNum"
+                    :label="$t('localization.tel')"
+                    width="180"
                 >
-                    <el-table-column
-                        type="index"
-                        :label="$t('localization.index')"
-                        align="center"
-                        width="80"
-                    ></el-table-column>
-                    <el-table-column prop="rmaSn" :label="$t('localization.search')" width="180">
-                        <template slot-scope="scope">
-                            <el-link
-                                type="primary"
-                                class="btn-opt"
-                                @click="viewDetail(scope.$index, scope.row)"
-                                size="small"
-                            >{{scope.row.rmaSn}}</el-link>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="orderSn" :label="$t('localization.name')" width="180"></el-table-column>
-                    <el-table-column
-                        prop="logisticsNum"
-                        :label="$t('localization.tel')"
-                        width="180"
-                    >
-                        <template slot-scope="scope">
-                            <el-link
-                                type="primary"
-                                class="btn-opt"
-                                @click="viewTrack(scope.$index, scope.row)"
-                                size="small"
-                            >{{scope.row.rmaSn}}</el-link>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="expressCode" :label="$t('localization.mail')" width="90"></el-table-column>
-                    <el-table-column
-                        prop="stockCode"
-                        :label="$t('localization.loginCount')"
-                        width="180"
-                    ></el-table-column>
-                    <el-table-column
-                        prop="inStockCode"
-                        :label="$t('localization.loginIp')"
-                        width="180"
-                    ></el-table-column>
-                    <el-table-column
-                        prop="createUser"
-                        :label="$t('localization.loginTime')"
-                        width="100"
-                    ></el-table-column>
-                    <el-table-column
-                        prop="createTime"
-                        :label="$t('localization.releGroup')"
-                        width="150"
-                    ></el-table-column>
-                    <el-table-column
-                        fixed="right"
-                        :label="$t('localization.operation')"
-                        width="160"
-                    >
-                        <template slot-scope="scope">
-                            <el-button
-                                class="btn-opt"
-                                @click="viewDetail(scope.$index, scope.row)"
-                                type="text"
-                                size="small"
-                            >查看明细</el-button>
-                            <el-button
-                                class="btn-opt"
-                                @click="viewImage(scope.$index, scope.row.packImgs)"
-                                type="text"
-                                size="small"
-                            >查看图片</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <div class="page">
-                    <el-pagination
-                        @size-change="handleSizeChange"
-                        @current-change="handleCurrentChange"
-                        :current-page="tablePage.currentPage"
-                        :page-size="tablePage.per_page"
-                        layout="total, prev, pager, next, jumper"
-                        :total="tablePage.total"
-                    ></el-pagination>
-                </div>
+                    <template slot-scope="scope">
+                        <el-link
+                            type="primary"
+                            class="btn-opt"
+                            @click="viewTrack(scope.$index, scope.row)"
+                            size="small"
+                        >{{scope.row.rmaSn}}</el-link>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="expressCode" :label="$t('localization.mail')" width="90"></el-table-column>
+                <el-table-column
+                    prop="stockCode"
+                    :label="$t('localization.loginCount')"
+                    width="180"
+                ></el-table-column>
+                <el-table-column
+                    prop="inStockCode"
+                    :label="$t('localization.loginIp')"
+                    width="180"
+                ></el-table-column>
+                <el-table-column
+                    prop="createUser"
+                    :label="$t('localization.loginTime')"
+                    width="100"
+                ></el-table-column>
+                <el-table-column
+                    prop="createTime"
+                    :label="$t('localization.releGroup')"
+                    width="150"
+                ></el-table-column>
+                <el-table-column
+                    fixed="right"
+                    :label="$t('localization.operation')"
+                    width="160"
+                >
+                    <template slot-scope="scope">
+                        <el-button
+                            class="btn-opt"
+                            @click="viewDetail(scope.$index, scope.row)"
+                            type="text"
+                            size="small"
+                        >查看明细</el-button>
+                        <el-button
+                            class="btn-opt"
+                            @click="viewImage(scope.$index, scope.row.packImgs)"
+                            type="text"
+                            size="small"
+                        >查看图片</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="page">
+                <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="tablePage.currentPage"
+                    :page-size="tablePage.per_page"
+                    layout="total, prev, pager, next, jumper"
+                    :total="tablePage.total"
+                ></el-pagination>
             </div>
         </div>
+    </div>
 
         <!-- 创建新用户 -->
         <el-dialog
@@ -211,9 +213,13 @@
 import breadcrumb from '../../../components/breadcrumb'
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer/src/component.vue'
+import commonHeader from '@/components/commonHeader'
+import leftMenu from '@/components/leftMenu'
 export default {
     components: {
         breadcrumb,
+        commonHeader,
+        leftMenu,
         Viewer
     },
     props: {
@@ -299,6 +305,12 @@ export default {
                     url: ''
                 }
             ]
+        },
+        pageContengSize () {
+            return {
+                w: window.innerWidth - 200,
+                h: window.innerHeight - 60
+            }
         }
     },
     created: function() {},
