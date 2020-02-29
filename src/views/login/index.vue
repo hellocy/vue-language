@@ -136,44 +136,47 @@ export default {
     },
     methods: {
         getVcode() {
-            let PLM_INTERFACE = window.PLM_INTERFACE
-            PLM_INTERFACE.login.getVcode().then(res => {
+            this.formData.digits = ''
+            let ZT_INTERFACE = window.ZT_INTERFACE
+            ZT_INTERFACE.login.getVcode().then(res => {
                 const data = res.data
                 this.vCodeImgSrc = data.data.split('imgge').join('image')
                 this.vcodeId = data.id
-                console.log(this.vCodeImgSrc, 6867)
             })
         },
         refreshVcode() {
-            let PLM_INTERFACE = window.PLM_INTERFACE
+            let ZT_INTERFACE = window.ZT_INTERFACE
             let param = {
                 id: this.vcodeId
             }
-            console.log(44444, 22222)
-            PLM_INTERFACE.login.refreshVcode(param).then(res => {
+            ZT_INTERFACE.login.refreshVcode(param).then(res => {
                 const data = res.data
                 this.vCodeImgSrc = data.data
                 this.vcodeId = data.id
-                console.log(this.vCodeImgSrc, 6867)
             })
         },
         goHome() {},
         onSubmit() {
-            let PLM_INTERFACE = window.PLM_INTERFACE
+            let ZT_INTERFACE = window.ZT_INTERFACE
             let param = {
                 username: this.formData.username,
                 password: this.formData.password,
                 id: this.vcodeId,
                 digits: this.formData.digits
             }
+            if (!this.formData.username || !this.formData.password) {
+                return this.$message({
+                    showClose: true,
+                    message: '请输入用户名和密码',
+                    type: 'error'
+                })
+            }
             this.getVcode()
-            console.log(param, 88888888)
-            PLM_INTERFACE.login.login(param).then(res => {
+            ZT_INTERFACE.login.login(param).then(res => {
                 const data = res.data
-                if (data.code === 0) {
+                if (data.status === 0) {
                     this.$router.push('/')
                 }
-                this.$router.push('/')
             })
         }
     }

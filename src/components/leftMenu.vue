@@ -82,8 +82,18 @@
                     <template slot="title">
                         <span slot="title">企业发布审核</span>
                     </template>
-                    <el-menu-item index="/system_manage/user/list">企业信息审核</el-menu-item>
-                    <el-menu-item index="/system_manage/role_group/list">个人信息审核</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/agriculture_breading">生活服务</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/food_industry">交友</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/energy_source_metal">休闲娱乐</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/machinery_industry">医学美容</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/vehicle_trans">电商</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/chemical_pharmaceutical_health">家用产品</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/building_materials_furniture">办公用品</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/electronic_information">二手市场</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/pack_printing_publish">房地产</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/leather_home_luxury">教育培训</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/tour_sightseeing">工农业</el-menu-item>
+                    <el-menu-item index="/enterprise_audit/yellow_page/tourist_hotel">旅游&酒店</el-menu-item>
                 </el-submenu>
             </el-submenu>
 
