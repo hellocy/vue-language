@@ -117,7 +117,7 @@ export default {
                 this.apmUserFilters = this.data
                 this.apmUserOptions = this.data
             } else if (!this.data) {
-                PLM_INTERFACE.dict
+                ZT_INTERFACE.dict
                     .getUsersByRole({ roleCodes: this.roles })
                     .then(res => {
                         if (res && res.data && res.data.code === 0) {
@@ -158,7 +158,7 @@ export default {
             this.$emit('change', this.selectedValue)
         },
         getAllUsers (v) {
-            PLM_INTERFACE.basicInfoManage.user.getPageList({
+            ZT_INTERFACE.basicInfoManage.user.getPageList({
                 offset: this.pageOffset,
                 limit: 20,
                 condition: {

@@ -56,6 +56,7 @@ export default {
     overflow: hidden;
     background-color: #fff;
     border-bottom: 1px solid #f5f7fa;
+    margin-bottom: 5px;
     .start-icon {
         width: 3px;
         height: 30px;

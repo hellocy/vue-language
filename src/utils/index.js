@@ -55,7 +55,7 @@ export function getDesigners() {
                 getApmDesigners
             }
         }
-    } = PLM_INTERFACE
+    } = ZT_INTERFACE
     getApmDesigners().then(res => {
         if (res && res.data.code === 0) {
             store.dispatch('common/setDesigners', res.data.data)
@@ -196,7 +196,7 @@ export function computedTableHeight(disH = 80) {
 
 export function getFabricColor(param) {
     return new Promise((resolve, reject) => {
-        PLM_INTERFACE.dict.getColorData(param).then(res => {
+        ZT_INTERFACE.dict.getColorData(param).then(res => {
             let data = res.data
             let code = data.code
             if (code === 0) {

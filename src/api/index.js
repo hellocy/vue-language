@@ -6,13 +6,13 @@ import login from '@/api/login'
 // 系统管理
 import systemManage from '@/api/system_manage'
 // 面料管理
-import fabricManage from '@/api/fabric_manage'
+import auditManage from '@/api/audit_manage'
 
 const INTERFACE = {
     dict,
     login,
     systemManage,
-    fabricManage
+    auditManage
 }
 
 export default INTERFACE

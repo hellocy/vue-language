@@ -110,7 +110,7 @@ export default {
         },
         // 退出登录
         logout () {
-            PLM_INTERFACE.login.logout({ sid: this.sid }).then(res => {
+            ZT_INTERFACE.login.logout({ sid: this.sid }).then(res => {
                 if (res && res.data.code === 0) {
                     sessionStorage.removeItem('userInfo')
                     sessionStorage.removeItem('sid')

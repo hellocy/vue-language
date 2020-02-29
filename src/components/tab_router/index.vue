@@ -44,7 +44,9 @@ export default {
             return this.$route.path === '/' || this.openedTabs.length === 0
         }
     },
-    mounted () { },
+    mounted () { 
+        alert(this.currentTabIndex)
+    },
     methods: {
         handleTabClick (tab, event) {
             let targetName = tab.name

@@ -324,7 +324,7 @@ export default {
             let condStr = JSON.stringify(this.searchForm)
             let param = `st=5&biz_content={"start":1, "limit":20,"condi":${condStr}}`
             console.log(param, 88888)
-            PLM_INTERFACE.systemManage.systemUser.api(`st=1&biz_content=${param}`).then(res => {
+            ZT_INTERFACE.systemManage.systemUser.api(`st=1&biz_content=${param}`).then(res => {
                 const data = res.data
                 this.loading = false
                 if (data.code === 0) {
@@ -375,7 +375,7 @@ export default {
         },
         newUser() {
             let newUserInfoStr = JSON.stringify(this.newUserForm)
-            PLM_INTERFACE.systemManage.systemUser.api(`st=1&biz_content=${newUserInfoStr}`).then(res => {
+            ZT_INTERFACE.systemManage.systemUser.api(`st=1&biz_content=${newUserInfoStr}`).then(res => {
                 const data = res.data
                 this.loading = false
                 if (data.code === 0) {
@@ -397,7 +397,7 @@ export default {
         },
         viewDetail(index, row) {
             this.loading = true
-            PLM_INTERFACE.rpForecast.getSkuDetail({ id: row.id }).then(res => {
+            ZT_INTERFACE.rpForecast.getSkuDetail({ id: row.id }).then(res => {
                 const data = res.data
                 this.loading = false
                 if (data.code === 0) {

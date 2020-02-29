@@ -98,25 +98,16 @@
 .main-content {
     display: flex;
 }
-.main-left-menu {
-    width: 200px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background: rgb(84, 92, 100);
-}
-.page-container {
-    width: 500px;
-    padding: 5px;
-}
+
 </style>
 
 <template>
     <div>
         <common-header ref="commonHeader"></common-header>
-        <left-menu ref="leftMenu"></left-menu>
+        <left-menu ref="leftMenu" v-if="leftMenuVisible"></left-menu>
         <div
             class="page-content-wraper"
-            v-bind:style="{width: pageContengSize.w + 'px', height: pageContengSize.h + 'px'}"
+            v-bind:style="{width: pageContengSize.w + 'px', height: pageContengSize.h + 'px', left: pageLeft + 'px'}"
         >
             <transition name="fade" mode="out-in">
                 <router-view></router-view>
@@ -128,6 +119,7 @@
 <script>
 import commonHeader from '@/components/commonHeader'
 import leftMenu from '@/components/leftMenu'
+import { mapGetters } from 'vuex'
 export default {
     components: {
         commonHeader,
@@ -137,12 +129,18 @@ export default {
         return {}
     },
     computed: {
+        ...mapGetters({
+            // 左侧菜单是否显示
+            pageLeft: 'common/pageLeft',
+            leftMenuVisible: 'common/leftMenuVisible'
+        }),
         pageContengSize() {
             return {
-                w: window.innerWidth - 200,
+                w: window.innerWidth - (this.leftMenuVisible ? this.pageLeft : 0),
                 h: window.innerHeight - 60
             }
         }
+        
     },
     mounted: function() {
         // this.getLoginSid()

@@ -14,7 +14,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import '@/permission'
-import PLM_INTERFACE from '@/api/index'
+import ZT_INTERFACE from '@/api/index'
 import filters from './utils/filters'
 import {
     computedTableHeight,
@@ -34,7 +34,7 @@ const host = location.host
 const {
     serverHost
 } = servers.get(host) || servers.get('dev')
-window.PLM_INTERFACE = PLM_INTERFACE // 全局API
+window.ZT_INTERFACE = ZT_INTERFACE // 全局API
 
 window.computedTableHeight = computedTableHeight
 window.storeCondition = storeCondition // 存储查询条件和页码的方式

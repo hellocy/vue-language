@@ -8,7 +8,9 @@ export default {
         dict: {},
         designers: [],
         userInfo: '',
-        breadcrumbData: []
+        breadcrumbData: [],
+        pageLeft: '225',
+        leftMenuVisible: true
     },
 
     actions: {
@@ -23,6 +25,9 @@ export default {
         },
         setBreadcrumbData({ commit }, data) {
             commit('updateBreadcrumbData', data)
+        },
+        leftMenuVisible({ commit }, data) {
+            commit('setLeftMenuVisible', data)
         }
     },
 
@@ -42,6 +47,11 @@ export default {
         },
         updateBreadcrumbData: (state, data) => {
             state.breadcrumbData = data
+        },
+        setLeftMenuVisible: (state, data) => {
+            state.leftMenuVisible = data
+            state.pageLeft = data ? 220 : 0
+            console.log(state.pageLeft, 8888877777)
         }
     },
 
@@ -57,6 +67,8 @@ export default {
                 state.userInfo || JSON.parse(sessionStorage.getItem('userInfo'))
             )
         },
-        breadcrumbData: state => state.breadcrumbData
+        breadcrumbData: state => state.breadcrumbData,
+        leftMenuVisible: state => state.leftMenuVisible,
+        pageLeft: state => state.pageLeft
     }
 }

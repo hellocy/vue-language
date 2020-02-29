@@ -11,7 +11,8 @@ const store = new Vuex.Store({
         common,
         tabRouter,
         menus
-    }
+    },
+    leftMenuVisible: false
 })
 
 export default store

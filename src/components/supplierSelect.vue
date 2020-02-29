@@ -67,7 +67,7 @@ export default {
     },
     methods: {
         getSupplier() {
-            PLM_INTERFACE.purchaesCoordination.duplicatePattern.producePatternViewBoard
+            ZT_INTERFACE.purchaesCoordination.duplicatePattern.producePatternViewBoard
                 .getSupplier()
                 .then(res => {
                     if (res && res.data && res.data.code === 0) {

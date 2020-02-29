@@ -28,7 +28,7 @@
                             style="width: 130px;"
                         ></el-input>
                     </el-form-item>
-                    <el-form-item style="margin-left: 20px;">
+                    <el-form-item style="margin-left: 5px;">
                         <el-button
                             type="primary"
                             size="mini"
@@ -43,7 +43,7 @@
                         >{{$t('localization.reset')}}</el-button>
                         <el-button
                             style="margin-left: 20px;"
-                            type="primary"
+                            type="success"
                             size="mini"
                             icon="el-icon-plus"
                             @click="newUser"
@@ -66,58 +66,58 @@
                     align="center"
                     width="80"
                 ></el-table-column>
-                <el-table-column prop="rmaSn" :label="$t('localization.search')" width="180">
+                <el-table-column prop="orderNo" :label="$t('localization.orderNo')">
                     <template slot-scope="scope">
                         <el-link
                             type="primary"
                             class="btn-opt"
                             @click="viewDetail(scope.$index, scope.row)"
                             size="small"
-                        >{{scope.row.rmaSn}}</el-link>
+                        >{{scope.row.orderNo}}</el-link>
                     </template>
                 </el-table-column>
-                <el-table-column prop="orderSn" :label="$t('localization.name')" width="180"></el-table-column>
-                <el-table-column prop="logisticsNum" :label="$t('localization.tel')" width="180">
+                <el-table-column prop="title" :label="$t('localization.title')"></el-table-column>
+                <el-table-column prop="submitTime" :label="$t('localization.submitTime')">
                     <template slot-scope="scope">
                         <el-link
                             type="primary"
                             class="btn-opt"
                             @click="viewTrack(scope.$index, scope.row)"
                             size="small"
-                        >{{scope.row.rmaSn}}</el-link>
+                        >{{scope.row.submitTime}}</el-link>
                     </template>
                 </el-table-column>
-                <el-table-column prop="expressCode" :label="$t('localization.mail')" width="90"></el-table-column>
-                <el-table-column
-                    prop="stockCode"
-                    :label="$t('localization.loginCount')"
-                    width="180"
-                ></el-table-column>
-                <el-table-column prop="inStockCode" :label="$t('localization.loginIp')" width="180"></el-table-column>
-                <el-table-column
-                    prop="createUser"
-                    :label="$t('localization.loginTime')"
-                    width="100"
-                ></el-table-column>
-                <el-table-column
-                    prop="createTime"
-                    :label="$t('localization.releGroup')"
-                    width="150"
-                ></el-table-column>
-                <el-table-column fixed="right" :label="$t('localization.operation')" width="160">
+                <el-table-column prop="submitUser" :label="$t('localization.submitUser')" width="90"></el-table-column>
+                <el-table-column prop="status" :label="$t('localization.status')"></el-table-column>
+                <el-table-column prop="statusDesc" :label="$t('localization.statusDesc')"></el-table-column>
+                <el-table-column prop="dealUser" :label="$t('localization.dealUser')" ></el-table-column>
+                <el-table-column prop="dealTime" :label="$t('localization.dealTime')" width="150"></el-table-column>
+                <el-table-column fixed="right" :label="$t('localization.operation')" width="200">
                     <template slot-scope="scope">
+                        <el-button
+                            class="btn-opt"
+                            @click="auditPass(scope.$index, scope.row)"
+                            type="text"
+                            size="small"
+                        >通过</el-button>
+                        <el-button
+                            class="btn-opt"
+                            @click="auditReject(scope.$index, scope.row)"
+                            type="text"
+                            size="small"
+                        >驳回</el-button>
+                        <el-button
+                            class="btn-opt"
+                            @click="auditEdit(scope.$index, scope.row)"
+                            type="text"
+                            size="small"
+                        >编辑</el-button>
                         <el-button
                             class="btn-opt"
                             @click="viewDetail(scope.$index, scope.row)"
                             type="text"
                             size="small"
-                        >查看明细</el-button>
-                        <el-button
-                            class="btn-opt"
-                            @click="viewImage(scope.$index, scope.row.packImgs)"
-                            type="text"
-                            size="small"
-                        >查看图片</el-button>
+                        >查看</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -133,47 +133,123 @@
             </div>
         </div>
 
-        <!-- 创建新用户 -->
+        <!-- 查看/编辑详情 -->
         <el-dialog
-            title="创建新用户"
-            :visible.sync="isNewUserVisible"
+            :title="'单据' + (!isView ? '编辑' : '详情')"
+            :visible.sync="isOrderDtlVisible"
             width="500px"
             :close-on-click-moda="false"
+            top="2vh"
             @close="onNewUserWinClose"
         >
-            <el-form ref="newUserForm" :model="newUserForm" label-width="80px">
-                <el-form-item label="角色组">
+            <el-form ref="orderForm" :model="orderForm" label-width="90px">
+                <el-form-item label="广告标题：">
+                    <el-input v-if="!isView" class="new-user-form-item" v-model="orderForm.advTitle"></el-input>
+                    <span v-if="isView">{{orderForm.advTitle}}</span>
+                </el-form-item>
+                <el-form-item label="地区：">
                     <el-select
+                        v-if="!isView"
                         class="new-user-form-item"
-                        v-model="newUserForm.region"
-                        placeholder="请选择角色组"
+                        v-model="orderForm.region"
+                        placeholder="请选择"
                     >
-                        <el-option label="管理员" value="1"></el-option>
-                        <el-option label="店小二" value="2"></el-option>
+                        <el-option label="北京" value="1"></el-option>
+                        <el-option label="上海" value="2"></el-option>
                     </el-select>
+                    <span v-if="isView">{{orderForm.region}}</span>
                 </el-form-item>
-                <el-form-item label="用户名">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                <el-form-item label="城市名：">
+                    <el-select
+                        v-if="!isView"
+                        class="new-user-form-item"
+                        v-model="orderForm.city"
+                        placeholder="请选择"
+                    >
+                        <el-option label="北京" value="1"></el-option>
+                        <el-option label="上海" value="2"></el-option>
+                    </el-select>
+                    <span v-if="isView">{{orderForm.city}}</span>
                 </el-form-item>
-                <el-form-item label="密码">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                <el-form-item label="附加信息：">
+                    <el-input v-if="!isView" type="textarea" v-model="orderForm.attachInfo" style="width: 350px"></el-input>
+                    <span v-if="isView">{{orderForm.attachInfo}}</span>
                 </el-form-item>
-                <el-form-item label="重复密码">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                <el-form-item label="广告有效性：">
+                    <el-select
+                        v-if="!isView"
+                        class="new-user-form-item"
+                        v-model="orderForm.advEffective"
+                        placeholder="请选择"
+                    >
+                        <el-option label="30天" value="1"></el-option>
+                        <el-option label="60天" value="2"></el-option>
+                    </el-select>
+                    <span v-if="isView">{{['30天', '60天'][orderForm.advEffective]}}</span>
                 </el-form-item>
-                <el-form-item label="登录名">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                <el-form-item label="照片：">
+                    <el-upload ref="upload"
+                            v-if="!isView"
+                            :headers="uploadHeaders"
+                            :action="imgUploadUrl"
+                            list-type="picture-card"
+                            :on-success="onImagesUpdated"
+                            :on-preview="handlePictureCardPreview"
+                            :file-list="images"
+                            :on-remove="handleRemove">
+                        <i class="el-icon-plus"></i>
+                    </el-upload>
+                    <el-image v-if="isView"
+                            v-for="(img, idx) in images"
+                            :key="idx"
+                            style="width: 100px; height: 100px; margin-right: 10px;"
+                            :src="img.url"
+                            @click="handlePictureCardPreview(img)"
+                            fit="cover"></el-image>
                 </el-form-item>
-                <el-form-item label="电话">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                <el-form-item label="联系人：">
+                    <el-input v-if="!isView" class="new-user-form-item" v-model="orderForm.contactUser"></el-input>
+                    <span v-if="isView">{{orderForm.contactUser}}</span>
                 </el-form-item>
-                <el-form-item label="邮箱">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                <el-form-item label="联系电话：">
+                    <el-input v-if="!isView" class="new-user-form-item" v-model="orderForm.phone"></el-input>
+                    <span v-if="isView">{{orderForm.phone}}</span>
+                </el-form-item>
+                <el-form-item label="公司名称：">
+                    <el-input v-if="!isView" class="new-user-form-item" v-model="orderForm.company"></el-input>
+                    <span v-if="isView">{{orderForm.company}}</span>
+                </el-form-item>
+                <el-form-item label="公司简介：">
+                    <el-input v-if="!isView" type="textarea" v-model="orderForm.desc" style="width: 350px"></el-input>
+                    <span v-if="isView">{{orderForm.desc}}</span>
+                </el-form-item>
+                <el-form-item label="公司地址：">
+                    <el-input v-if="!isView" class="new-user-form-item" v-model="orderForm.address"></el-input>
+                    <span v-if="isView">{{orderForm.address}}</span>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button size="mini" @click="isNewUserVisible = false">取 消</el-button>
-                <el-button size="mini" type="primary" @click="newUserConfirm">确 定</el-button>
+                <el-button size="mini" @click="isOrderDtlVisible = false">取 消</el-button>
+                <el-button size="mini" type="danger" v-if="!isView" @click="orderFormSure">发 布</el-button>
+            </span>
+        </el-dialog>
+
+        <el-dialog :visible.sync="isImageVisible"
+                   :modal-append-to-body="false">
+            <img width="100%"
+                 :src="dialogImageUrl"
+                 alt />
+        </el-dialog>
+
+        <el-dialog title="驳回" :visible.sync="auditFormVisible" width="30%">
+            <el-form ref="sendBackForm" label-width="80px">
+                <el-form-item label="驳回原因">
+                    <el-input type="textarea" v-model="rejectReason" style="width:90%"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button size="small" @click="auditFormVisible = false">取 消</el-button>
+                <el-button size="small" type="primary" @click="orderFormSure()">确 定</el-button>
             </span>
         </el-dialog>
 
@@ -183,7 +259,7 @@
             @inited="initImageViewer"
             class="viewer"
             ref="viewer"
-            v-show="isImgVisible"
+            v-show="isImageVisible"
         >
             <template scope="scope">
                 <img v-for="src in scope.images" :src="src" :key="src" />
@@ -202,86 +278,64 @@ export default {
         breadcrumb,
         Viewer
     },
-    props: {
-        depart: {
-            type: String
-        }
-    },
-    watch: {
-        depart(oldVal, newVal) {
-            this.initTable() // 重新加载列表数据
-        }
-    },
     data() {
         return {
             prfClass: 'rp-forecast-customer',
             isDetailVisible: false,
-            isNewUserVisible: false,
-            newUserForm: {},
+            isOrderDtlVisible: false,
             searchForm: {
                 username: '',
                 displayname: '',
                 mobile: ''
             },
-            tableData: [],
-            detailData: [
+            tableData: [
                 {
-                    goodsCode: '438698701',
-                    goodsName: '438698701',
-                    forecastkAmount: 1,
-                    realBackAmount: 0,
-                    nineAmount: 0,
-                    badAmount: 0,
-                    checkReason: '缺件',
-                    confirmTime: '2019-04-30 10:45:02'
+
                 }
             ],
-            traceData: {
-                traceTabActiveName: 'all',
-                status: '',
-                latest: {
-                    id: '',
-                    statusText: '',
-                    from: '',
-                    to: '',
-                    datetime: '',
-                    trayStatus: ''
-                },
-                from: [],
-                to: [],
-                all: 0,
-                lost: 0,
-                carrying: 0,
-                arrived: 0,
-                fail: 0,
-                exception: 0,
-                success: 0,
-                back: 0
-            },
             tableHeight: 300,
             tablePage: {
                 offset: 1, // 当前页
                 limit: 20, // 每页数量
                 total: 0 // 总数量
             },
-            detail_tablePage: {
-                offset: 1, // 当前页
-                limit: 20, // 每页数量
-                total: 0 // 总数量
+            orderForm: {
+                advTitle: '世纪佳缘-同城交友',
+                region: '1',
+                city: '1',
+                attachInfo: '限单身',
+                advEffective: '1',
+                contactUser: '王五',
+                phone: '18955688865',
+                company: '北京世纪佳缘有限公司',
+                desc: '靠谱',
+                address: '北五环'
             },
-            isImgVisible: false,
-            images: []
+            auditFormVisible: false,
+            rejectReason: '',
+            uploadHeaders: {
+                'ACCESS_TOKEN': sessionStorage.getItem('accessToken')
+            },
+            imgUploadUrl: window.SERVERHOST + '/upload',
+            dialogImageUrl: '',
+            isImageVisible: false,
+            images: [],
+            isView: true
         }
     },
     computed: {
         breadcrumbList() {
             return [
                 {
-                    name: this.$t('localization.sysMge'),
+                    name: '审核管理', // this.$t('localization.sysMge'),
                     url: ''
                 },
                 {
-                    name: this.$t('localization.sysUserMge'), // '系统用户管理',
+                    name: '企业黄页审核', // this.$t('localization.sysUserMge'), // '系统用户管理',
+                    url: ''
+                },
+                {
+                    name: '农业/养殖业', // this.$t('localization.sysUserMge'), // '系统用户管理',
                     url: ''
                 }
             ]
@@ -316,7 +370,7 @@ export default {
             let condStr = JSON.stringify(this.searchForm)
             let param = `st=5&biz_content={"start":1, "limit":20,"condi":${condStr}}`
             console.log(param, 88888)
-            PLM_INTERFACE.systemManage.systemUser
+            ZT_INTERFACE.systemManage.systemUser
                 .api(`st=1&biz_content=${param}`)
                 .then(res => {
                     const data = res.data
@@ -368,31 +422,44 @@ export default {
             }
         },
         newUser() {
-            let newUserInfoStr = JSON.stringify(this.newUserForm)
-            PLM_INTERFACE.systemManage.systemUser
+            let newUserInfoStr = JSON.stringify(this.orderForm)
+            ZT_INTERFACE.systemManage.systemUser
                 .api(`st=1&biz_content=${newUserInfoStr}`)
                 .then(res => {
                     const data = res.data
                     this.loading = false
                     if (data.code === 0) {
-                        this.isNewUserVisible = true
+                        this.isOrderDtlVisible = true
                     } else {
                     }
                 })
         },
-        newUserConfirm() {
-            this.isNewUserVisible = false
+        orderFormSure() {
+            let rejectReason = {
+                remark: this.rejectReason
+            }
+            this.loading = true
+            ZT_INTERFACE.systemManage.systemUser
+                .api(`st=1&biz_content=${rejectReason}`)
+                .then(res => {
+                    const data = res.data
+                    this.loading = false
+                    if (data.code === 0) {
+                        this.isOrderDtlVisible = false
+                    } else {
+
+                    }
+                })
         },
         onNewUserWinClose() {},
         formatStatus(row, column) {
             let status = row.status
-            // alert(status)
             let _arr = ['待退件', '退件中', '异常完成', '已完成', '关闭']
             return _arr[Number(status) - 1]
         },
-        viewDetail(index, row) {
+        auditPass (index, row) {
             this.loading = true
-            PLM_INTERFACE.rpForecast.getSkuDetail({ id: row.id }).then(res => {
+            ZT_INTERFACE.auditManage.yellowPage.getDetail({ id: row.id }).then(res => {
                 const data = res.data
                 this.loading = false
                 if (data.code === 0) {
@@ -401,6 +468,77 @@ export default {
                     this.isDetailVisible = true
                 }
             })
+        },
+        auditReject (index, row) {
+            this.auditFormVisible = true
+            this.loading = true
+            ZT_INTERFACE.auditManage.yellowPage.getDetail({ id: row.id }).then(res => {
+                const data = res.data
+                this.loading = false
+                if (data.code === 0) {
+                    this.detailData = data.data.list
+                    this.detail_tablePage.total = Number(data.data.total)
+                    this.isDetailVisible = false
+                }
+            })
+        },
+        auditEdit (index, row) {
+            this.isView = false
+            this.isOrderDtlVisible = true
+            this.loading = true
+            ZT_INTERFACE.auditManage.yellowPage.getDetail({ id: row.id }).then(res => {
+                const data = res.data
+                this.loading = false
+                if (data.code === 0) {
+                    this.detailData = data.data.list
+                    this.detail_tablePage.total = Number(data.data.total)
+                    this.isOrderDtlVisible = true
+                }
+            })
+        },
+        viewDetail(index, row) {
+            this.isView = true
+            this.isOrderDtlVisible = true
+            this.loading = true
+            ZT_INTERFACE.auditManage.yellowPage.getDetail({ id: row.id }).then(res => {
+                const data = res.data
+                this.loading = false
+                if (data.code === 0) {
+                    this.detailData = data.data.list
+                    this.detail_tablePage.total = Number(data.data.total)
+                    this.isDetailVisible = true
+                }
+            })
+        },
+        // 图片上传成功后
+        onImagesUpdated (response, file, fileList) {
+            let imgData = response.data
+            this.images.push({
+                id: imgData.id,
+                name: imgData.imageName,
+                url: window.SERVERHOST + 'image/downLoad?imageId=' + imgData.id
+            })
+        },
+        // 图片删除
+        handleRemove (file, fileList) {
+            let idx = this.images.findIndex(
+                item => item.id === file.id
+            )
+            this.images.splice(idx, 1)
+            ZT_INTERFACE.auditManage.yellowPage
+                .deleteImage({
+                    id: file.id
+                })
+                .then(res => {
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功'
+                    })
+                })
+        },
+        handlePictureCardPreview (file) {
+            this.dialogImageUrl = file.url
+            this.isImageVisible = true
         },
         initImageViewer(viewer) {
             this.$viewer = viewer

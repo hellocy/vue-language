@@ -132,6 +132,7 @@ export default {
     },
     created() {
         this.getVcode()
+        this.$store.dispatch('common/leftMenuVisible', false)
     },
     methods: {
         getVcode() {

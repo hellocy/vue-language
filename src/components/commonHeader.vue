@@ -1,8 +1,4 @@
 <style lang="scss" scoped>
-    .el-menu-vertical-demo:not(.el-menu--collapse) {
-        width: 200px;
-        min-height: 400px;
-    }
     .main-headbar {
         width: 100%;
         height: 60px;
@@ -214,9 +210,6 @@ export default {
         }
     },
     mounted () {
-        const subwin = document.querySelector('.subwin-outer-box')
-        const body = document.querySelector('body')
-        body.appendChild(subwin)
     },
     computed: {
         height () {
@@ -266,68 +259,68 @@ export default {
                 }
             )
         },
-        getLoginSid() {
-            let token = sessionStorage.accessToken
-            let sid = this.getQueryString('sid')
-            if (!token || token === 'undefined') {
-                if (sid) {
-                    this.login(sid)
-                } else {
-                    location.href = window.loginRedirectUrl
-                }
-            } else {
-                // 页面刷新时
-                // alert('页面刷新时，根据sid请求菜单数据: ' + sid)
-                let sid = this.getQueryString('sid') || sessionStorage.sid
-                this.login(sid)
-            }
-        },
+        // getLoginSid() {
+        //     let token = sessionStorage.accessToken
+        //     let sid = this.getQueryString('sid')
+        //     if (!token || token === 'undefined') {
+        //         if (sid) {
+        //             this.login(sid)
+        //         } else {
+        //             location.href = window.loginRedirectUrl
+        //         }
+        //     } else {
+        //         // 页面刷新时
+        //         // alert('页面刷新时，根据sid请求菜单数据: ' + sid)
+        //         let sid = this.getQueryString('sid') || sessionStorage.sid
+        //         this.login(sid)
+        //     }
+        // },
         goHome() {
             this.$router.push('/')
         },
-        login(sid) {
-            PLM_INTERFACE.login.getToken({ sid: sid }).then(
-                res => {
-                    console.log(res, res.headers['rmp-token'])
-                    if (res) {
-                        sessionStorage.sid = sid
-                        let code = res.data.code
-                        if (code === 0) {
-                            let data = res.data.data
-                            sessionStorage.accessToken = data['accessToken']
-                            this.menuData = data.menus.menuList.map(item => {
-                                let name = item.name
-                                let list = item.list.map(sec => {
-                                    return {
-                                        name: sec.name,
-                                        url: sec.url
-                                    }
-                                })
-                                return {
-                                    name: name,
-                                    list: list
-                                }
-                            })
-                            const filterDep = item => {
-                                return {
-                                    label: item.departmentName,
-                                    value: item.departmentId
-                                }
-                            }
-                            this.userInfo.name = data.userName
-                            location.href =
-                                location.origin + '/' + location.hash
-                        }
-                    }
-                },
-                err => {
-                    this.$alert(err.message, '提示', {
-                        type: 'error',
-                        confirmButtonText: '确定'
-                    })
-                }
-            )
-        },
+        // login(sid) {
+        //     ZT_INTERFACE.login.getToken({ sid: sid }).then(
+        //         res => {
+        //             console.log(res, res.headers['rmp-token'])
+        //             if (res) {
+        //                 sessionStorage.sid = sid
+        //                 let code = res.data.code
+        //                 if (code === 0) {
+        //                     let data = res.data.data
+        //                     sessionStorage.accessToken = data['accessToken']
+        //                     this.menuData = data.menus.menuList.map(item => {
+        //                         let name = item.name
+        //                         let list = item.list.map(sec => {
+        //                             return {
+        //                                 name: sec.name,
+        //                                 url: sec.url
+        //                             }
+        //                         })
+        //                         return {
+        //                             name: name,
+        //                             list: list
+        //                         }
+        //                     })
+        //                     const filterDep = item => {
+        //                         return {
+        //                             label: item.departmentName,
+        //                             value: item.departmentId
+        //                         }
+        //                     }
+        //                     this.userInfo.name = data.userName
+        //                     location.href =
+        //                         location.origin + '/' + location.hash
+        //                 }
+        //             }
+        //         },
+        //         err => {
+        //             this.$alert(err.message, '提示', {
+        //                 type: 'error',
+        //                 confirmButtonText: '确定'
+        //             })
+        //         }
+        //     )
+        // },
         handleSelect(key, keyPath) {
             console.log(key, keyPath)
             this.$router.push({ path: key })

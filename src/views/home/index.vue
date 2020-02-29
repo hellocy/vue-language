@@ -9,7 +9,6 @@
 </template>
 <script>
 import arrowIcon from '../../../static/images/arrow.svg'
-import { mapGetters } from 'vuex'
 export default {
     name: 'home',
     data() {
@@ -19,17 +18,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({
-            menuData: 'menuList'
-        }),
-        pageContengSize() {
-            return {
-                w: window.innerWidth - 200,
-                h: window.innerHeight - 60
-            }
-        }
     },
-    created() {},
+    created() {
+        this.$store.dispatch('common/leftMenuVisible', true)
+    },
     mounted: {},
     methods: {
         linkToPage(item) {
