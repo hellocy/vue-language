@@ -397,7 +397,7 @@ export default {
         },
         viewDetail(index, row) {
             this.loading = true
-            PLM_INTERFACE.rpForecast.getSkuDetail({ id: row.id }).then(res => {
+            ZT_INTERFACE.rpForecast.getSkuDetail({ id: row.id }).then(res => {
                 const data = res.data
                 this.loading = false
                 if (data.code === 0) {

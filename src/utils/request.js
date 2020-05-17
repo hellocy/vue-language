@@ -15,12 +15,11 @@ window.ajax = service
 // request拦截器
 service.interceptors.request.use(
     config => {
+        let accessToken = sessionStorage.getItem('accessToken')
         // 让每个请求携带自定义token 请根据实际情况自行修改
-        if (sessionStorage.getItem('accessToken')) {
-            config.headers['token'] = sessionStorage.getItem('accessToken')
+        if (accessToken) {
+            config.headers['Authorization'] = accessToken.replace(/\"/g,"")
         }
-        config.headers['Content-Type'] = 'application/json'
-        config.data = JSON.stringify(config.data)
         return config
     },
     error => {
@@ -30,6 +29,7 @@ service.interceptors.request.use(
 // respone拦截器
 service.interceptors.response.use(
     response => {
+        console.log('response:', response)
         let data = response.data
         if (data.status === 0) {
             return response
