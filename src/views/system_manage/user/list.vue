@@ -67,51 +67,28 @@
                         align="center"
                         width="80"
                     ></el-table-column>
-                    <el-table-column prop="rmaSn" :label="$t('localization.search')" width="180">
-                        <template slot-scope="scope">
-                            <el-link
-                                type="primary"
-                                class="btn-opt"
-                                @click="viewDetail(scope.$index, scope.row)"
-                                size="small"
-                            >{{scope.row.rmaSn}}</el-link>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="orderSn" :label="$t('localization.name')" width="180"></el-table-column>
+                    <el-table-column prop="username" label="登录名"></el-table-column>
+                    <el-table-column prop="displayname" label="姓名"></el-table-column>
+                    <el-table-column prop="mobile" label="电话"></el-table-column>
                     <el-table-column
-                        prop="logisticsNum"
-                        :label="$t('localization.tel')"
-                        width="180"
-                    >
-                        <template slot-scope="scope">
-                            <el-link
-                                type="primary"
-                                class="btn-opt"
-                                @click="viewTrack(scope.$index, scope.row)"
-                                size="small"
-                            >{{scope.row.rmaSn}}</el-link>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="expressCode" :label="$t('localization.mail')" width="90"></el-table-column>
-                    <el-table-column
-                        prop="stockCode"
-                        :label="$t('localization.loginCount')"
-                        width="180"
+                        prop="email"
+                        label="邮箱"
                     ></el-table-column>
                     <el-table-column
-                        prop="inStockCode"
-                        :label="$t('localization.loginIp')"
-                        width="180"
+                        prop="login_num"
+                        label="登录次数"
                     ></el-table-column>
                     <el-table-column
-                        prop="createUser"
-                        :label="$t('localization.loginTime')"
-                        width="100"
+                        prop="last_login_ip"
+                        label="登录IP"
                     ></el-table-column>
                     <el-table-column
-                        prop="createTime"
-                        :label="$t('localization.releGroup')"
-                        width="150"
+                        prop="last_login_dt"
+                        label="登录时间"
+                    ></el-table-column>
+                    <el-table-column
+                        prop="role_group"
+                        label="角色组"
                     ></el-table-column>
                     <el-table-column
                         fixed="right"
@@ -119,18 +96,15 @@
                         width="160"
                     >
                         <template slot-scope="scope">
-                            <el-button
-                                class="btn-opt"
-                                @click="viewDetail(scope.$index, scope.row)"
-                                type="text"
-                                size="small"
-                            >查看明细</el-button>
-                            <el-button
-                                class="btn-opt"
-                                @click="viewImage(scope.$index, scope.row.packImgs)"
-                                type="text"
-                                size="small"
-                            >查看图片</el-button>
+                            <i class="user-opt-icon el-icon-edit" title="编辑" @click="edit(scope.$index, scope.row)"></i>
+                            <i class="user-opt-icon el-icon-delete" title="删除" @click="deleteUser(scope.$index, scope.row)"></i>
+                            <i class="user-opt-icon el-icon-edit-outline" title="修改密码" @click="changePwd(scope.$index, scope.row)"></i>
+                            <el-switch
+                                v-model="scope.row.enable"
+                                active-color="#13ce66"
+                                inactive-color="#ff4949"
+                                @change="onActiveChanged(scope.row)">
+                            </el-switch>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -149,7 +123,7 @@
 
         <!-- 创建新用户 -->
         <el-dialog
-            title="创建新用户"
+            :title="newEditTitle"
             :visible.sync="isNewUserVisible"
             width="500px"
             :close-on-click-moda="false"
@@ -159,30 +133,31 @@
                 <el-form-item label="角色组">
                     <el-select
                         class="new-user-form-item"
-                        v-model="newUserForm.region"
+                        v-model="newUserForm.role_group_id"
                         placeholder="请选择角色组"
                     >
                         <el-option label="管理员" value="1"></el-option>
                         <el-option label="店小二" value="2"></el-option>
+                        <el-option label="李晓明" value="3"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="用户名">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                <el-form-item label="登录名">
+                    <el-input class="new-user-form-item" v-model="newUserForm.username"></el-input>
                 </el-form-item>
                 <el-form-item label="密码">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                    <el-input class="new-user-form-item" show-password v-model="newUserForm.password"></el-input>
                 </el-form-item>
                 <el-form-item label="重复密码">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                    <el-input class="new-user-form-item" show-password v-model="newUserForm.repassword"></el-input>
                 </el-form-item>
-                <el-form-item label="登录名">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                <el-form-item label="昵称">
+                    <el-input class="new-user-form-item" v-model="newUserForm.displayname"></el-input>
                 </el-form-item>
                 <el-form-item label="电话">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                    <el-input class="new-user-form-item" v-model="newUserForm.mobile"></el-input>
                 </el-form-item>
                 <el-form-item label="邮箱">
-                    <el-input class="new-user-form-item" v-model="newUserForm.name"></el-input>
+                    <el-input class="new-user-form-item" v-model="newUserForm.email"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -191,19 +166,27 @@
             </span>
         </el-dialog>
 
-        <!-- 图片浏览组件 -->
-        <viewer
-            :images="images"
-            @inited="initImageViewer"
-            class="viewer"
-            ref="viewer"
-            v-show="isImgVisible"
+        <!-- 创建新用户 -->
+        <el-dialog
+            title="修改密码"
+            :visible.sync="isPwdVisible"
+            width="500px"
+            :close-on-click-moda="false"
+            @close="onNewUserWinClose"
         >
-            <template scope="scope">
-                <img v-for="src in scope.images" :src="src" :key="src" />
-                {{scope.options}}
-            </template>
-        </viewer>
+            <el-form ref="newUserForm" :model="newUserForm" label-width="80px">
+                <el-form-item label="新密码">
+                    <el-input class="new-user-form-item" show-password v-model="newPwd"></el-input>
+                </el-form-item>
+                <el-form-item label="重复密码">
+                    <el-input class="new-user-form-item" show-password v-model="reNewPwd"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button size="mini" @click="isPwdVisible = false">取 消</el-button>
+                <el-button size="mini" type="primary" @click="pwdConfirm">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -283,8 +266,12 @@ export default {
                 limit: 20, // 每页数量
                 total: 0 // 总数量
             },
-            isImgVisible: false,
-            images: []
+            newEditTitle: '创建新用户',
+            saveType: 1,
+            rowData: {},
+            isPwdVisible: false,
+            newPwd: '',
+            reNewPwd: ''
         }
     },
     computed: {
@@ -322,13 +309,12 @@ export default {
         initTable() {
             this.loading = true
             let condStr = JSON.stringify(this.searchForm)
-            let param = `st=5&biz_content={"start":1, "limit":20,"condi":${condStr}}`
-            console.log(param, 88888)
-            PLM_INTERFACE.systemManage.systemUser.api(`st=1&biz_content=${param}`).then(res => {
+            let param = "st=5&biz_content=" + JSON.stringify({start:1, limit:20,condi:condStr})
+            ZT_INTERFACE.systemManage.systemUser.api(param).then(res => {
                 const data = res.data
                 this.loading = false
-                if (data.code === 0) {
-                    this.tableData = data.data.list
+                if (data.status === 0) {
+                    this.tableData = data.data.rows
                     this.tablePage.total = Number(data.data.total)
                 }
             })
@@ -360,12 +346,8 @@ export default {
             }
         },
         onSearch() {
-            // 搜索
-            // this.tablePage.currentPage = 1 // 默认搜索第一页
-            // this.initTable()
-            this.$message({
-                message: this.$t('localization.supplierManager')
-            })
+            this.tablePage.currentPage = 1 // 默认搜索第一页
+            this.initTable()
         },
         onClear() {
             // 重置
@@ -374,57 +356,112 @@ export default {
             }
         },
         newUser() {
-            let newUserInfoStr = JSON.stringify(this.newUserForm)
-            PLM_INTERFACE.systemManage.systemUser.api(`st=1&biz_content=${newUserInfoStr}`).then(res => {
+            this.isNewUserVisible = true
+            this.saveType = 1
+        },
+        newUserConfirm() {
+            let param = `st=${this.saveType}&biz_content= + ${JSON.stringify(this.newUserForm)}`
+            ZT_INTERFACE.systemManage.systemUser.api(param).then(res => {
                 const data = res.data
                 this.loading = false
-                if (data.code === 0) {
-                    this.isNewUserVisible = true
+                if (data.stusde === 0) {
+                    this.isNewUserVisible = false
+                    this.initTable()
                 } else {
-
+                    this.$message({
+                        type: 'error',
+                        message: data.message
+                    });
                 }
             })
         },
-        newUserConfirm() {
-            this.isNewUserVisible = false
-        },
         onNewUserWinClose() {},
+        pwdConfirm () {
+            if (this.newPwd !== this.reNewPwd) {
+                return this.$message({
+                    showClose: true,
+                    type: 'error',
+                    message: '两次输入的密码不一致'
+                })
+            }
+            let param = `st=7&biz_content= + ${JSON.stringify({k: this.rowData.k, password: this.newPwd})}`
+            ZT_INTERFACE.systemManage.systemUser.api(param).then(res => {
+                const data = res.data
+                this.loading = false
+                if (data.stusde === 0) {
+                    this.isNewUserVisible = false
+                    this.initTable()
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: data.message
+                    });
+                }
+            })
+        },
         formatStatus(row, column) {
             let status = row.status
             // alert(status)
             let _arr = ['待退件', '退件中', '异常完成', '已完成', '关闭']
             return _arr[Number(status) - 1]
         },
-        viewDetail(index, row) {
-            this.loading = true
-            PLM_INTERFACE.rpForecast.getSkuDetail({ id: row.id }).then(res => {
-                const data = res.data
-                this.loading = false
-                if (data.code === 0) {
-                    this.detailData = data.data.list
-                    this.detail_tablePage.total = Number(data.data.total)
-                    this.isDetailVisible = true
-                }
+        edit (index, row) {
+            this.newUserForm = JSON.parse(JSON.stringify(row))
+            this.newUserForm.role_group_id = String(this.newUserForm.role_group_id)
+            this.newUserForm.repassword = this.newUserForm.password
+            this.newEditTitle = '编辑用户信息'
+            this.isNewUserVisible = true
+            this.saveType = 2
+        },
+        deleteUser (index, row) {
+            this.$confirm('此操作将删除该用户, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                let param = `st=3&biz_content= + ${JSON.stringify({k: row.k})}`
+                ZT_INTERFACE.systemManage.systemUser.api(param).then(res => {
+                    const data = res.data
+                    this.loading = false
+                    if (data.status === 0) {
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                        this.initTable()
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: data.message
+                        });
+                    }
+                })
             })
         },
-        initImageViewer(viewer) {
-            this.$viewer = viewer
+        changePwd (index, row) {
+            this.rowData = row
+            this.isPwdVisible = true
         },
-        viewImage(index, imgs) {
-            let images = imgs
-            if (images.length === 0) {
-                this.$message({
-                    message: '暂无图片',
-                    type: 'info'
-                })
-                return
-            }
-            for (let i = 0; i < images.length; i++) {
-                this.$set(this.images, i, images[i])
-            }
-            this.$viewer.reset()
-            setTimeout(() => {
-                this.$viewer.show()
+        onActiveChanged (row) {
+            let msg = row.enable ? '激活' : '禁用'
+            let type = row.enable ? 'success' : 'warning'
+            let optType = row.enable ? 8 : 9
+            let param = `st=${optType}&biz_content= + ${JSON.stringify({k: row.k})}`
+            ZT_INTERFACE.systemManage.systemUser.api(param).then(res => {
+                const data = res.data
+                this.loading = false
+                if (data.status === 0) {
+                    this.$message({
+                        showClose: true,
+                        type: type,
+                        message: '当前用户已' + msg
+                    })
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: data.message
+                    });
+                }
             })
         }
     }
@@ -437,5 +474,24 @@ export default {
 }
 .new-user-form-item {
     width: 350px;
+}
+.user-opt-icon{
+    font-size: 16px;
+    margin-right: 5px;
+    margin-top: 5px;
+    cursor:pointer;
+    &.el-icon-edit{
+        color:#409EFF
+    }
+    &.el-icon-delete{
+        color:#F56C6C
+    }
+    &.el-icon-edit-outline{
+        color:#E6A23C
+    }
+}
+.el-switch{
+    display: inline-block;
+    vertical-align: top;
 }
 </style>

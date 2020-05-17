@@ -111,7 +111,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-
+import { localStore, sessionStore } from '@/utils'
 export default {
     data() {
         return {
@@ -175,7 +175,11 @@ export default {
             ZT_INTERFACE.login.login(param).then(res => {
                 const data = res.data
                 if (data.status === 0) {
-                    this.$router.push('/')
+                    sessionStore('test', 'Bearer cycycy')
+                    sessionStore('accessToken', 'Bearer ' + data.token.substring(0, data.token.length))
+                    setTimeout(() => {
+                        this.$router.push('/')
+                    })    
                 }
             })
         }
