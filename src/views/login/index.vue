@@ -93,7 +93,7 @@
                     <el-input v-model="formData.username"></el-input>
                 </el-form-item>
                 <el-form-item label="密码">
-                    <el-input v-model="formData.password"></el-input>
+                    <el-input v-model="formData.password" show-password></el-input>
                 </el-form-item>
                 <el-form-item label="验证码">
                     <div class="v-code-bopx">
@@ -171,15 +171,25 @@ export default {
                     type: 'error'
                 })
             }
+            if (!this.formData.digits) {
+                return this.$message({
+                    showClose: true,
+                    message: '请输入验证码',
+                    type: 'error'
+                })
+            }
             this.getVcode()
             ZT_INTERFACE.login.login(param).then(res => {
                 const data = res.data
                 if (data.status === 0) {
                     sessionStore('test', 'Bearer cycycy')
-                    sessionStore('accessToken', 'Bearer ' + data.token.substring(0, data.token.length))
+                    sessionStore(
+                        'accessToken',
+                        'Bearer ' + data.token.substring(0, data.token.length)
+                    )
                     setTimeout(() => {
                         this.$router.push('/')
-                    })    
+                    })
                 }
             })
         }
