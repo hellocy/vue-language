@@ -15,6 +15,16 @@ import enterpriseAuditYelloPage from './enterprise_audit/yellow_page/index'
 // 审核管理-企业发布审核
 import enterpriseAuditPublish from './enterprise_audit/publish/index'
 
+// 推荐企业、供需、展会-推荐企业
+import recomand from './recomand/company/index'
+// 推荐企业、供需、展会-供需
+import supply from './recomand/supply/index'
+// 推荐企业、供需、展会-展会
+import exhibit from './recomand/exhibit/index'
+
+// 广告
+import adv from './adv/index'
+
 Vue.use(Router)
 
 const mainRouter = [
@@ -67,7 +77,11 @@ export const constantRouterMap = mainRouter.concat([
     ...systemRoleGroup,
     ...enterpriseAuditRegist,
     ...enterpriseAuditYelloPage,
-    ...enterpriseAuditPublish
+    ...enterpriseAuditPublish,
+    ...recomand,
+    ...supply,
+    ...exhibit,
+    ...adv
 ])
 export default new Router({
     scrollBehavior: () => ({

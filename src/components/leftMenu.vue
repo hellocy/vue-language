@@ -56,6 +56,22 @@
             </el-submenu>
             <el-submenu index="4">
                 <template slot="title">
+                    <i class="el-icon-collection"></i>
+                    <span slot="title">推荐企业/供需/展会</span>
+                </template>
+                <el-menu-item index="/recomand/company">推荐企业</el-menu-item>
+                <el-menu-item index="/recomand/supply">供需</el-menu-item>
+                <el-menu-item index="/recomand/exhibit">展会</el-menu-item>
+            </el-submenu>
+            <el-submenu index="5">
+                <template slot="title">
+                    <i class="el-icon-s-opportunity"></i>
+                    <span slot="title">广告管理</span>
+                </template>
+                <el-menu-item index="/adv">广告</el-menu-item>
+            </el-submenu>
+            <el-submenu index="6">
+                <template slot="title">
                     <i class="el-icon-s-check"></i>
                     <span slot="title">审核管理</span>
                 </template>
@@ -97,34 +113,34 @@
                 </el-submenu>
             </el-submenu>
 
-            <el-submenu index="5">
+            <el-submenu index="7">
                 <template slot="title">
                     <i class="el-icon-top"></i>
                     <span slot="title">置顶管理</span>
                 </template>
                 <el-menu-item index="/system_manage/user/list">刷新</el-menu-item>
             </el-submenu>
-            <el-menu-item index="6">
+            <el-menu-item index="8">
                 <i class="el-icon-s-comment"></i>
                 <span slot="title">点评管理</span>
             </el-menu-item>
-            <el-menu-item index="7">
+            <el-menu-item index="9">
                 <i class="el-icon-wallet"></i>
                 <span slot="title">支付管理</span>
             </el-menu-item>
-            <el-menu-item index="8">
+            <el-menu-item index="10">
                 <i class="el-icon-sugar"></i>
                 <span slot="title">权益管理</span>
             </el-menu-item>
-            <el-menu-item index="9">
+            <el-menu-item index="11">
                 <i class="el-icon-s-tools"></i>
                 <span slot="title">系统消息</span>
             </el-menu-item>
-            <el-menu-item index="10">
+            <el-menu-item index="11">
                 <i class="el-icon-s-data"></i>
                 <span slot="title">统计报表</span>
             </el-menu-item>
-            <el-submenu index="11">
+            <el-submenu index="12">
                 <template slot="title">
                     <i class="el-icon-office-building"></i>
                     <span slot="title">系统管理</span>
@@ -136,43 +152,43 @@
                 <el-menu-item index="/system_manage/role_group/list">菜单管理</el-menu-item>
                 <el-menu-item index="/system_manage/role_group/list">api</el-menu-item>
             </el-submenu>
-            <el-menu-item index="12">
+            <el-menu-item index="13">
                 <i class="el-icon-notebook-2"></i>
                 <span slot="title">员工操作日志</span>
             </el-menu-item>
-            <el-menu-item index="13">
+            <el-menu-item index="14">
                 <i class="el-icon-s-grid"></i>
                 <span slot="title">模块管理</span>
             </el-menu-item>
-            <el-menu-item index="14">
+            <el-menu-item index="15">
                 <i class="el-icon-s-shop"></i>
                 <span slot="title">销售管理</span>
             </el-menu-item>
-            <el-menu-item index="15">
+            <el-menu-item index="16">
                 <i class="el-icon-s-flag"></i>
                 <span slot="title">活动管理</span>
             </el-menu-item>
-            <el-menu-item index="16">
+            <el-menu-item index="17">
                 <i class="el-icon-user-solid"></i>
                 <span slot="title">员工管理</span>
             </el-menu-item>
-            <el-menu-item index="17">
+            <el-menu-item index="18">
                 <i class="el-icon-s-finance"></i>
                 <span slot="title">财务管理</span>
             </el-menu-item>
-            <el-menu-item index="18">
+            <el-menu-item index="19">
                 <i class="el-icon-guide"></i>
                 <span slot="title">培训管理</span>
             </el-menu-item>
-            <el-menu-item index="19">
+            <el-menu-item index="20">
                 <i class="el-icon-s-order"></i>
                 <span slot="title">订单管理</span>
             </el-menu-item>
-            <el-menu-item index="20">
+            <el-menu-item index="21">
                 <i class="el-icon-s-goods"></i>
                 <span slot="title">供应商管理</span>
             </el-menu-item>
-            <el-menu-item index="21">
+            <el-menu-item index="22">
                 <i class="el-icon-ship"></i>
                 <span slot="title">物流管理</span>
             </el-menu-item> <!-- -->

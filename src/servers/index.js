@@ -11,22 +11,6 @@ const servers = new Map([
         }
     ],
     [
-        'plm.hqygou.com:8187', // 测试环境1
-        {
-            callbackUrl: Base64.encodeURI('http://plm.hqygou.com:8187'),
-            serverHost: 'http://plm.hqygou.com:8188/',
-            baseUrl: 'http://user.hqygou.com/login/index'
-        }
-    ],
-    [
-        'plm.hqygou.com:8087', // 测试环境2
-        {
-            callbackUrl: Base64.encodeURI('http://plm.hqygou.com:8087'),
-            serverHost: 'http://plm.hqygou.com:8088/',
-            baseUrl: 'http://user.hqygou.com/login/index'
-        }
-    ],
-    [
         'dev', // 开发环境
         {
             callbackUrl: Base64.encodeURI('http://10.29.6.253:9528'),
